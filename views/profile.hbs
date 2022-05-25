@@ -1,0 +1,28 @@
+<div>name:</div>
+<div>mail:</div>
+<div class="inputs">
+  <form method="post" action="/profile/newPref">
+    <div class="prefer">
+      <label for="prefer">Хочу видеть</label>
+      <input id="prefer" name="textus">
+      <button type="submit">Добавить</button>
+    </div>
+    <ul>
+      {{#each prefs}}
+      <li>{{this.text}}</li>
+      {{/each}}
+    </ul>
+  </form>
+  <form method="post" action="/newNotpref">
+    <div class="notprefer">
+      <label for="notprefer">Не хочу видеть</label>
+      <input id="notprefer" name="textus2">
+      <button type="submit">Добавить</button>
+    </div>
+    <ul>
+      {{#each notprefs}}
+      <li>{{this.text}}</li>
+      {{/each}}
+    </ul>
+  </form>
+</div>
