@@ -1,0 +1,28 @@
+h1 {
+  margin: 15px;
+}
+
+.container-block {
+  display: flex;
+  justify-content: flex-start;
+  margin: 20px;
+}
+
+.news-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.news-list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  margin: 20px;
+}
+
+.width200 {
+  width: 200px;
+}
