@@ -14,7 +14,7 @@ app.use(session({
   store: new FileStore({}),
   secret: process.env.SESSION,
   resave: true,
-  maxAge: false // false - значение по умолчанию, можно указать в миллисекундах
+  maxAge: false, // false - значение по умолчанию, можно указать в миллисекундах
   saveUninitialized: true,
 }))
 
