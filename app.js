@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const hbs = require('hbs');
 const path = require('path');
 const catalogRouter = require('./routes/catalogRouter');
+const profileRouter = require('./routes/profileRouter');
 
 const PORT = process.env.DB_PORT ?? 3000;
 
@@ -30,6 +31,7 @@ app.use(express.json());
 app.use(express.static(path.join(process.env.PWD, 'public')));
 
 app.use('/catalog', catalogRouter);
+app.use('/profile', profileRouter);
 
 app.listen(PORT, () => {
   console.log('Server start on port', PORT);
