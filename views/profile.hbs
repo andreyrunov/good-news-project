@@ -4,7 +4,7 @@
   <form method="post" action="/profile/newPref">
     <div class="prefer">
       <label for="prefer">Хочу видеть</label>
-      <input id="prefer" name="textus">
+      <input id="prefer" name="textus" placeholder="Укажите тему">
       <button type="submit" id="123">Добавить</button>
     </div>
   </form>
@@ -13,7 +13,7 @@
     <div class="pref">
       <li>{{this.text}}</li>
       <form method="post" action="/profile/deleteP/{{this.id}}">
-        <button id={{this.id}}>X</button>
+        <button class="but" id={{this.id}}>X</button>
       </form>
     </div>
     {{/each}}
@@ -21,7 +21,7 @@
   <form method="post" action="/profile/newNotpref">
     <div class="notprefer">
       <label for="notprefer">Не хочу видеть</label>
-      <input id="notprefer" name="textus2">
+      <input id="notprefer" name="textus2" placeholder="Укажите тему">
       <button type="submit">Добавить</button>
     </div>
   </form>
@@ -30,7 +30,7 @@
     <div class="pref">
       <li>{{this.text}}</li>
       <form method="post" action="/profile/deleteNP/{{this.id}}">
-        <button id={{this.id}} type="submit">X</button>
+        <button class="but" id={{this.id}} type="submit">X</button>
       </form>
     </div>
     {{/each}}

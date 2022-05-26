@@ -3,7 +3,7 @@ const { Prefer, Notprefer, User } = require('../db/models')
 
 router.route('/')
   .get(async (req, res) => {
-    const id = 1;
+    const id = req.session.userid;
     const currUser = await User.findOne({ where: { id } });
     const imya = currUser.name;
     const pochta = currUser.mail;
@@ -17,8 +17,9 @@ router.post('/newPref', async (req, res) => {
   const { textus } = req.body;
   const newpref = await Prefer.create({
     text: textus,
-    user_id: 1,
+    user_id: req.session.userid,
   });
+
   res.redirect('/profile');
 });
 
@@ -26,7 +27,7 @@ router.post('/newNotpref', async (req, res) => {
   const { textus2 } = req.body;
   const newnotpref = await Notprefer.create({
     text: textus2,
-    user_id: 1,
+    user_id: req.session.userid,
   });
   res.redirect('/profile')
 });
