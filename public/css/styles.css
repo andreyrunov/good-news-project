@@ -1,3 +1,4 @@
+
 h1 {
   margin: 15px;
 }
@@ -25,4 +26,9 @@ h1 {
 
 .width200 {
   width: 200px;
+
+.inputs{
+  display: flex;
+flex-direction: row;
+
 }
