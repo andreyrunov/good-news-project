@@ -36,17 +36,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(process.env.PWD, 'public')));
 
-app.use(checkSession);
+app.use('/', authRouter);
 app.use('/auth', authRouter);
 app.use('/register', registerRouter);
 app.use('/catalog', catalogRouter);
 app.use('/profile', profileRouter);
-app.use('/card/id', cardRouter);
+app.use('/about', cardRouter);
 
-app.use('/', authRouter);
+app.use(checkSession);
 
 app.use('/out', out);
-
 
 app.listen(PORT, () => {
   console.log('Server start on port', PORT);

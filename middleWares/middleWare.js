@@ -3,7 +3,7 @@ const checkSession = (req, res, next) => {
     res.locals.user = {
       name: req.session.userName,
       id: req.session.userid,
-    };gi
+    };
     return next();
   }
   return res.redirect('/');

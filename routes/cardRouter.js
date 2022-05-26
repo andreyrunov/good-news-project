@@ -1,14 +1,12 @@
 const router = require('express').Router();
-const { User, Category, Post } = require('../db/models');
+const { Category, Post } = require('../db/models');
 
-router.route('/')
+router.route('/:id')
   .get(async (req, res) => {
-    const id = 1;
-    const idPost = 1111;
-    const userName = await User.findOne({ where: { id } });
-    const post = await Post.findOne({ where: { id: idPost } });
+    const { id } = req.params;
+    const post = await Post.findOne({ where: { id }, raw: true });
     const categoryNames = await Category.findAll();
-    res.render('card', { categoryNames, userName, post });
+    res.render('card', { categoryNames, post });
   });
 
 module.exports = router;

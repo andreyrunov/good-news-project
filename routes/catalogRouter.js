@@ -3,6 +3,8 @@ const axios = require('axios');
 const { parseString } = require('xml2js');
 const { User, Category, Post } = require('../db/models');
 
+// /catalog
+
 router.route('/')
   .get(async (req, res) => {
     try {
@@ -14,7 +16,7 @@ router.route('/')
       // eslint-disable-next-line max-len
       const categoriesArr = categoryNames.map((el) => ({ id: el.dataValues.id, title: el.dataValues.title }));
       // setTimeout(console.log(categoryNames[0].title), 1000);
-      console.log(categoriesArr);
+      // console.log(categoriesArr);
 
       const getRiaNews = await axios.get('https://ria.ru/export/rss2/archive/index.xml');
       let news;
@@ -61,7 +63,7 @@ router.route('/')
               });
             }
           } catch (err) {
-            console.log(err);
+            // console.log(err);
           }
         });
       });
@@ -70,8 +72,17 @@ router.route('/')
 
       res.render('catalog', { userName, categoryNames, posts });
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
   });
 
+
+/*   // /catalog/:card
+  router.route('/:card')
+  .get(async (req, res) => {
+    const  Names = await Category.findAll();
+
+  }) */
+
+  
 module.exports = router;
