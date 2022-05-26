@@ -15,14 +15,23 @@ max-width: 150px;
   justify-content: flex-start;
   margin: 20px;
 }
-
-.news-list {
+.news-list-wrapper{ 
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.card-item {
+  display: flex;
+  flex-direction: column;
   justify-content: flex-start;
 }
 
-.news-list-wrapper {
+.back{
+ display: flex;
+ margin-left: 10px;
+}
+
+.card-wrapper {
   display: flex;
   flex-wrap: wrap;
 }
@@ -34,6 +43,11 @@ max-width: 150px;
 .width200 {
   width: 200px;
 }
+
+.width600 {
+  width: 600px;
+}
+
 
 .inputs {
   display: flex;

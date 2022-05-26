@@ -1,0 +1,33 @@
+<h1>{{post.title}}</h1>
+<div class="container-block">
+  <div class="categories">
+    <div class="categories-wrapper">
+      <nav class="nav flex-column width200">
+        <!-- <a class="nav-link active" aria-current="page" href="/catalog">Важное в мире</a> -->
+        {{#each categoryNames}}
+        <a class="nav-link" href="#">{{this.title}}</a>
+        {{/each}}
+      </nav>
+    </div>
+  </div>
+  <div class="card-item">
+    <div class="back">
+    <button type="button" class="btn btn-link">Назад к статьям</button>
+    </div>
+    <div class="card-wrapper">
+      <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div>
+            <img src="{{post.img}}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col">
+            <div class="card-body">
+              <p class="card-text">{{post.text}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
