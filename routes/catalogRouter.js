@@ -12,16 +12,19 @@ router.route('/')
 
       const categoryNames = await Category.findAll();
 
-      const getRiaNews = await axios.get('https://ria.ru/export/rss2/archive/index.xml');
-      // const toJson = getRiaNews.json();
-      // const newResult =  parseString(String(getRiaNews.data), (err, result) => result);
-      // result.rss.channel[0].item
-      // console.log(newResult);
-      let news;
-      parseString(getRiaNews.data, (err, result) => {
-        news = result.rss.channel[0].item;
-      });
-      // console.log(news);
+
+    const getRiaNews = await axios.get('https://ria.ru/export/rss2/archive/index.xml');
+    // const toJson = getRiaNews.json();
+    // const newResult =  parseString(String(getRiaNews.data), (err, result) => result);
+    // result.rss.channel[0].item
+    // console.log(newResult);
+    let news;
+    parseString(getRiaNews.data, (err, result) => {
+      news = result.rss.channel[0].item;
+    });
+    // console.log(news.map((el) => ({ title: el.title, description: el.description, enclosure: el.enclosure?.[0].$ || null })));
+    // console.log(Object.keys(getRiaNews));
+
 
       console.log(news.map((el) => ({
         category: el.category[0], title: el.title[0], description: el.description[0], enclosure: el.enclosure?.[0].$ || null,
