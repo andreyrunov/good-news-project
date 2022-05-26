@@ -17,6 +17,7 @@ const FileStore = require('session-file-store')(session);
 
 const authRouter = require('./routes/authRouter');
 const registerRouter = require('./routes/registerRouter');
+const out = require('./routes/out');
 
 app.use(session({
   name: 'sessionID',
@@ -24,7 +25,7 @@ app.use(session({
   secret: process.env.SESSION,
   resave: true,
   maxAge: false, // false - значение по умолчанию, можно указать в миллисекундах
-  saveUninitialized: true,
+  saveUninitialized: false,
 }));
 
 app.set('view engine', 'hbs');
@@ -35,11 +36,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(process.env.PWD, 'public')));
 
+app.use(checkSession);
 app.use('/auth', authRouter);
 app.use('/register', registerRouter);
 app.use('/catalog', catalogRouter);
 app.use('/profile', profileRouter);
 app.use('/card/id', cardRouter);
+
+app.use('/', authRouter);
+
+app.use('/out', out);
+
 
 app.listen(PORT, () => {
   console.log('Server start on port', PORT);

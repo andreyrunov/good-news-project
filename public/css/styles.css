@@ -3,6 +3,13 @@ h1 {
   margin: 15px;
 }
 
+.pref {
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+max-width: 150px;
+}
+
 .container-block {
   display: flex;
   justify-content: flex-start;
@@ -41,8 +48,8 @@ h1 {
   width: 600px;
 }
 
-.inputs{
-  display: flex;
-flex-direction: row;
 
+.inputs {
+  display: flex;
+flex-direction: column;
 }
