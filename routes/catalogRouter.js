@@ -11,21 +11,29 @@ router.route('/')
       // console.log(userName);
 
       const categoryNames = await Category.findAll();
+      // eslint-disable-next-line max-len
+      const categoriesArr = categoryNames.map((el) => ({ id: el.dataValues.id, title: el.dataValues.title }));
+      // setTimeout(console.log(categoryNames[0].title), 1000);
+      console.log(categoriesArr);
 
       const getRiaNews = await axios.get('https://ria.ru/export/rss2/archive/index.xml');
-      // const toJson = getRiaNews.json();
-      // const newResult =  parseString(String(getRiaNews.data), (err, result) => result);
-      // result.rss.channel[0].item
-      // console.log(newResult);
       let news;
       parseString(getRiaNews.data, (err, result) => {
         news = result.rss.channel[0].item;
       });
-      // console.log(news);
 
-      console.log(news.map((el) => ({
-        category: el.category[0], title: el.title[0], description: el.description[0], enclosure: el.enclosure?.[0].$ || null,
-      })));
+      /* console.log(news.map((el) => ({
+        category: el.category[0], title: el.title[0], description: el.description[0], enclosure: el.enclosure?.[0].$.url,
+      }))); */
+
+      const newArr = news.map((el) => {
+        if (el.enclosure?.[0].$.type === 'image/jpeg') {
+          return {
+            category: el.category[0], title: el.title[0], description: el.description[0], enclosure: el.enclosure?.[0].$.url,
+          };
+        }
+      });
+
       // console.log(categoryNames);
       // const result = await Category.findOne({ where: { title: news[0].category[0] } });
       // news.forEach(async (el) => {
@@ -33,30 +41,34 @@ router.route('/')
       //     await Category.create({ title: el.category[0] });
       //   }
       //    console.log(result);
-        
-        // console.log(el.category[0]);
-      //});
-      news.forEach(async (el) => (
-        await Category.findOrCreate({
-          where: { title: el.category[0] },
-          defaults: { title: el.category[0] },
-        })
-      ));
 
-      // добавление новостей в бд
-      /* news.forEach(async (el) => (
-        await Post.findOrCreate({
-          where: {
-            title: el.title,
-            text: el.description,
-            category_id: 2,
-            img: el.enclosure?.[0].$ || null,
-          },
-        })
-      )); */
+      // console.log(el.category[0]);
+      // });
 
-      // console.log(Object.keys(getRiaNews));
-      res.render('catalog', { userName, categoryNames });
+      newArr.forEach(async (el) => {
+        categoriesArr.forEach(async (element) => {
+          try {
+            if (el !== undefined && element.title === el.category) {
+              await Post.create({
+                title: el.title, text: el.description, img: el.enclosure, category_id: element.id,
+              });
+            } else {
+              await Category.create({
+                title: el.category,
+              });
+              await Post.create({
+                title: el.title, text: el.description, img: el.enclosure, category_id: element.id,
+              });
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        });
+      });
+
+      const posts = await Post.findAll();
+
+      res.render('catalog', { userName, categoryNames, posts });
     } catch (err) {
       console.error(err);
     }

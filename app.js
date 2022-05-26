@@ -8,6 +8,7 @@ const path = require('path');
 const catalogRouter = require('./routes/catalogRouter');
 const { checkSession } = require('./middleWares/middleWare');
 const profileRouter = require('./routes/profileRouter');
+const cardRouter = require('./routes/cardRouter');
 
 const PORT = process.env.DB_PORT ?? 3000;
 
@@ -34,15 +35,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(process.env.PWD, 'public')));
 
-
-
-
-
 app.use('/auth', authRouter);
 app.use('/register', registerRouter);
 app.use('/catalog', catalogRouter);
 app.use('/profile', profileRouter);
-
+app.use('/card/id', cardRouter);
 
 app.listen(PORT, () => {
   console.log('Server start on port', PORT);
