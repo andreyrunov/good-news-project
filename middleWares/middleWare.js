@@ -1,12 +1,12 @@
 const checkSession = (req, res, next) => {
-  if (req.session.userid) {
+  if (req.session?.userid) {
     res.locals.user = {
       name: req.session.userName,
       id: req.session.userid,
-    };
+    };gi
     return next();
   }
-  next();
+  return res.redirect('/');
 };
 
 const checkLogin = (req, res, next) => {

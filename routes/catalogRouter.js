@@ -21,7 +21,7 @@ router.route('/')
     parseString(getRiaNews.data, (err, result) => {
       news = result.rss.channel[0].item;
     });
-    console.log(news.map((el) => ({ title: el.title, description: el.description, enclosure: el.enclosure?.[0].$ || null })));
+    // console.log(news.map((el) => ({ title: el.title, description: el.description, enclosure: el.enclosure?.[0].$ || null })));
     // console.log(Object.keys(getRiaNews));
 
     res.render('catalog', { userName, categoryNames });

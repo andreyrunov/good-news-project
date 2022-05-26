@@ -18,12 +18,11 @@ router.post('/', async (req, res) => {
     } else {
       const pas = await bcrypt.hash(pass, 10)
       const userIn = await User.create({...req.body,});
-        // req.session.userid = userIn.id;
-        // req.session.userName = userIn.name;
-        // req.session.userEmail = userIn.mail;
-        console.log('hjgfghjgfhgfgh');
-        
-       res.sendStatus(200)
+        req.session.userid = userIn.id;
+        req.session.userName = userIn.name;
+        req.session.userEmail = userIn.mail;
+        console.log('User is creat');
+       return res.sendStatus(200)
     }
   }
   return res.send(412);
