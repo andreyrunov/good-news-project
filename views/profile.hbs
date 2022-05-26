@@ -1,28 +1,38 @@
-<div>name:</div>
-<div>mail:</div>
-<div class="inputs">
+<div>name: {{imya}}</div>
+<div>mail: {{pochta}}</div>
+<div class="inputs" if="div">
   <form method="post" action="/profile/newPref">
     <div class="prefer">
       <label for="prefer">Хочу видеть</label>
       <input id="prefer" name="textus">
-      <button type="submit">Добавить</button>
+      <button type="submit" id="123">Добавить</button>
     </div>
-    <ul>
-      {{#each prefs}}
-      <li>{{this.text}}</li>
-      {{/each}}
-    </ul>
   </form>
-  <form method="post" action="/newNotpref">
+  <ul>
+    {{#each prefs}}
+    <div class="pref">
+      <li>{{this.text}}</li>
+      <form method="post" action="/profile/deleteP/{{this.id}}">
+        <button id={{this.id}}>X</button>
+      </form>
+    </div>
+    {{/each}}
+  </ul>
+  <form method="post" action="/profile/newNotpref">
     <div class="notprefer">
       <label for="notprefer">Не хочу видеть</label>
       <input id="notprefer" name="textus2">
       <button type="submit">Добавить</button>
     </div>
-    <ul>
-      {{#each notprefs}}
-      <li>{{this.text}}</li>
-      {{/each}}
-    </ul>
   </form>
+  <ul>
+    {{#each notprefs}}
+    <div class="pref">
+      <li>{{this.text}}</li>
+      <form method="post" action="/profile/deleteNP/{{this.id}}">
+        <button id={{this.id}} type="submit">X</button>
+      </form>
+    </div>
+    {{/each}}
+  </ul>
 </div>
