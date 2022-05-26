@@ -45,6 +45,43 @@ router.route('/')
         });
       });
 
+      const getRbc = await axios.get('https://rssexport.rbc.ru/rbcnews/news/30/full.rss');
+      
+      let newsRbc;
+      parseString(getRbc.data, (err, result) => {
+        newsRbc = result.rss.channel[0].item;
+      });
+      
+      const newArrRbc = newsRbc.map((el) => {
+        if (el.enclosure?.[0].$.type === 'image/jpeg') {
+          return {
+            category: el.category[0], title: el.title[0], description: el.description[0], enclosure: el.enclosure?.[0].$.url,
+          };
+        }
+      });
+      console.log(newArrRbc);
+
+      newArrRbc.forEach(async (el) => {
+        categoriesArr.forEach(async (element) => {
+          try {
+            if (el !== undefined && element.title === el.category) {
+              await Post.create({
+                title: el.title, text: el.description, img: el.enclosure, category_id: element.id,
+              });
+            } else {
+              await Category.create({
+                title: el.category,
+              });
+              await Post.create({
+                title: el.title, text: el.description, img: el.enclosure, category_id: element.id,
+              });
+            }
+          } catch (err) {
+            // console.log(err);
+          }
+        });
+      });
+      
       const posts = await Post.findAll();
 
       res.render('catalog', { userName, categoryNames, posts });
