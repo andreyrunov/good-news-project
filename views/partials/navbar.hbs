@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Good news</a>
+    <a class="navbar-brand" href="#">GOOD NEWS</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -10,36 +10,18 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/catalog">Все статьи</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
       </ul>
       {{#if user}}
-      <form  id = "out">
-        <button class="btn btn-outline-success" type="button">Hello, {{user.name}}!</button>
-        <button type = 'submit' class="btn" style="margin: 0px 3px">Log out</button>
+       <form  method="get" action="/profile" >
+        <button class="btn btn-outline-success" type="click">Привет, {{user.name}}!</button>
       </form>
+      <form  id = "out"  >
+        <button type = 'submit' class="btn" style="margin: 0px 3px">Выход</button>
+      </form>
+      
         {{else}}
         <form id = "register" action="/register" method ="get">
-           <button class="btn btn-outline-success" type="click" >Sign up</button>
+           <button class="btn btn-outline-success" type="click" >Зарегистрироваться</button>
         </form>
         {{/if}}
     </div>

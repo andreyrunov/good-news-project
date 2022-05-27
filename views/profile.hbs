@@ -1,38 +1,42 @@
-<div>name: {{imya}}</div>
-<div>mail: {{pochta}}</div>
+<div class="badge bg-secondary">name: {{imya}}</div><br>
+<div class="badge bg-secondary">mail: {{pochta}}</div>
 <div class="inputs" if="div">
-  <form method="post" action="/profile/newPref">
-    <div class="prefer">
-      <label for="prefer">Хочу видеть</label>
-      <input id="prefer" name="textus" placeholder="Укажите тему">
-      <button type="submit" id="123">Добавить</button>
-    </div>
-  </form>
-  <ul>
-    {{#each prefs}}
-    <div class="pref">
-      <li>{{this.text}}</li>
-      <form method="post" action="/profile/deleteP/{{this.id}}">
-        <button class="but" id={{this.id}}>X</button>
-      </form>
-    </div>
-    {{/each}}
-  </ul>
-  <form method="post" action="/profile/newNotpref">
-    <div class="notprefer">
-      <label for="notprefer">Не хочу видеть</label>
-      <input id="notprefer" name="textus2" placeholder="Укажите тему">
-      <button type="submit">Добавить</button>
-    </div>
-  </form>
-  <ul>
-    {{#each notprefs}}
-    <div class="pref">
-      <li>{{this.text}}</li>
-      <form method="post" action="/profile/deleteNP/{{this.id}}">
-        <button class="but" id={{this.id}} type="submit">X</button>
-      </form>
-    </div>
-    {{/each}}
-  </ul>
+  <div class="block">
+    <form method="post" action="/profile/newPref">
+      <div class="prefer">
+        <label for="prefer">Хочу видеть</label><br>
+        <input id="prefer" name="textus" placeholder="Укажите тему">
+        <button type="submit" id="123" class="btn btn-success">Добавить</button>
+      </div>
+    </form>
+    <ul>
+      {{#each prefs}}
+      <div class="pref">
+        <li class="li">{{this.text}}</li>
+        <form method="post" action="/profile/deleteP/{{this.id}}">
+          <button class="btn btn-link" id={{this.id}}>удалить</button>
+        </form>
+      </div>
+      {{/each}}
+    </ul>
+  </div>
+  <div class="block">
+    <form method="post" action="/profile/newNotpref">
+      <div class="notprefer">
+        <label for="notprefer">Не хочу видеть</label><br>
+        <input id="notprefer" name="textus2" placeholder="Укажите тему">
+        <button type="submit" class="btn btn-success">Добавить</button>
+      </div>
+    </form>
+    <ul>
+      {{#each notprefs}}
+      <div class="pref">
+        <li class="li">{{this.text}}</li>
+        <form method="post" action="/profile/deleteNP/{{this.id}}">
+          <button class="btn btn-link" id={{this.id}} type="submit"> удалить</button>
+        </form>
+      </div>
+      {{/each}}
+    </ul>
+  </div>
 </div>

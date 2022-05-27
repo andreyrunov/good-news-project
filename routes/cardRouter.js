@@ -6,6 +6,9 @@ router.route('/:id')
     const { id } = req.params;
     const post = await Post.findOne({ where: { id }, raw: true });
     const categoryNames = await Category.findAll();
+    const idUser = req.session.userid;
+    console.log("----------->>>", idUser);
+    
     res.render('card', { categoryNames, post });
   });
 
