@@ -5,21 +5,10 @@ h1 {
   margin: 15px;
 }
 
-/* .container-fluid {
-  background-color: white;
-}
-
-
-.navbar-expand-lg {
-  background-color: white;
-} */
-
 .navbar {
   background-color: white;
 }
-/* .container {
-  background-color: white;
-} */
+
 .pref {
 display: flex;
 flex-direction: row;
@@ -91,6 +80,7 @@ padding-top: 30px;
 
 .bg-secondary {
   font-size: 14px;
+  margin-left: 20px;
 }
 
 .block {

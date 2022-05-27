@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Prefer, Notprefer, User } = require('../db/models')
+const { Prefer, Notprefer, User } = require('../db/models');
 
 router.route('/')
   .get(async (req, res) => {
@@ -10,17 +10,23 @@ router.route('/')
     const prefs = await Prefer.findAll({ where: { user_id: currUser.id } });
     const notprefs = await Notprefer.findAll({ where: { user_id: currUser.id } });
 
-    res.render('profile', { prefs, notprefs, imya, pochta });
+    res.render('profile', {
+      prefs, notprefs, imya, pochta,
+    });
   });
 
 router.post('/newPref', async (req, res) => {
-  const { textus } = req.body;
-  const newpref = await Prefer.create({
-    text: textus,
-    user_id: req.session.userid,
-  });
+  try {
+    const { textus } = req.body;
+    const newpref = await Prefer.create({
+      text: textus,
+      user_id: req.session.userid,
+    });
 
-  res.redirect('/profile');
+    res.redirect('/profile');
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.post('/newNotpref', async (req, res) => {
@@ -29,7 +35,7 @@ router.post('/newNotpref', async (req, res) => {
     text: textus2,
     user_id: req.session.userid,
   });
-  res.redirect('/profile')
+  res.redirect('/profile');
 });
 
 router.post('/deleteNP/:id', async (req, res) => {

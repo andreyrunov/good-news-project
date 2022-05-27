@@ -9,11 +9,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        title: 'Спорт',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
         title: 'Политика',
         createdAt: new Date(),
         updatedAt: new Date(),

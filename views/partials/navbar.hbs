@@ -13,15 +13,15 @@
       </ul>
       {{#if user}}
        <form  method="get" action="/profile" >
-        <button class="btn btn-outline-success" type="click">Hello, {{user.name}}!</button>
+        <button class="btn btn-outline-success" type="click">Привет, {{user.name}}!</button>
       </form>
       <form  id = "out"  >
-        <button type = 'submit' class="btn" style="margin: 0px 3px">Log out</button>
+        <button type = 'submit' class="btn" style="margin: 0px 3px">Выход</button>
       </form>
       
         {{else}}
         <form id = "register" action="/register" method ="get">
-           <button class="btn btn-outline-success" type="click" >Sign up</button>
+           <button class="btn btn-outline-success" type="click" >Зарегистрироваться</button>
         </form>
         {{/if}}
     </div>

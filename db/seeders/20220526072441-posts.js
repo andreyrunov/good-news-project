@@ -12,14 +12,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        title: 'sensation',
-        text: 'OMG! Putin and Zelenskiy are both Hitlers! Russia and Ukraine are both evil',
-        img: 'https://en.wikipedia.org/wiki/Adolf_Hitler#/media/File:Hitler_portrait_crop.jpg',
-        category_id: 3,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
         title: 'record',
         text: 'biggest pizza was made in China! It is not tasty at all(',
         img: 'https://ru.wikipedia.org/wiki/%D0%9F%D0%B8%D1%86%D1%86%D0%B0#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Eq_it-na_pizza-margherita_sep2005_sml.jpg',
