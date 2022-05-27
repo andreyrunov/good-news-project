@@ -2,7 +2,7 @@ const router = require('express').Router();
 const axios = require('axios');
 const { parseString } = require('xml2js');
 const {
-  User, Category, Post, Prefer,
+  User, Category, Post, Prefer, Notprefer,
 } = require('../db/models');
 const { checkSession } = require('../middleWares/middleWare');
 
@@ -90,7 +90,7 @@ router.route('/')
       //  получаем списки предпочтений и не предпочтений
       const userId = req.session.userid;
       const prefers = await Prefer.findAll({ where: { user_id: userId }, raw: true });
-      // const notPrefers = await Notprefer.findAll({ where: { user_id: userId }, raw: true });
+      const notPrefers = await Notprefer.findAll({ where: { user_id: userId }, raw: true });
 
       const afterPref = [];
       posts.forEach((el) => prefers.forEach((elem) => {
@@ -99,15 +99,25 @@ router.route('/')
         }
       }));
 
+      const afterNotPref = [];
+      afterPref.forEach((el) => notPrefers.forEach((elem) => {
+        if (!el.text.includes(elem.text) && !el.title.includes(elem.text)) {
+          afterNotPref.push(el);
+        }
+      }));
+      // console.log(afterNotPref);
+
       let showPosts;
       if (prefers.length === 0) {
         showPosts = [...posts];
         // console.log('********* if');
-      } else {
+      } else if (afterNotPref.length === 0) {
         showPosts = [...afterPref];
         // console.log('********* else');
+      } else {
+        showPosts = [...afterNotPref];
       }
-      console.log('^^^^^^^^^^^^^^^^^^^', req.session.userid);
+      // console.log('^^^^^^^^^^^^^^^^^^^', req.session.userid);
       res.render('catalog', { userName, categoryNames, showPosts });
     } catch (err) {
       // console.error(err);
