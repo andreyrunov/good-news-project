@@ -12,10 +12,13 @@
         </li>
       </ul>
       {{#if user}}
-      <form  id = "out">
-        <button class="btn btn-outline-success" type="button">Hello, {{user.name}}!</button>
+       <form  method="get" action="/profile" >
+        <button class="btn btn-outline-success" type="click">Hello, {{user.name}}!</button>
+      </form>
+      <form  id = "out"  >
         <button type = 'submit' class="btn" style="margin: 0px 3px">Log out</button>
       </form>
+      
         {{else}}
         <form id = "register" action="/register" method ="get">
            <button class="btn btn-outline-success" type="click" >Sign up</button>
