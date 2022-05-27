@@ -1,5 +1,66 @@
-.inputs{
-  display: flex;
+
+h1 {
+  margin: 15px;
+}
+
+.pref {
+display: flex;
 flex-direction: row;
-justify-content: space-around;
+justify-content: space-between;
+max-width: 150px;
+min-height: 40px;
+}
+
+.container-block {
+  display: flex;
+  justify-content: flex-start;
+  margin: 20px;
+}
+.news-list-wrapper{ 
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.back{
+ display: flex;
+ margin-left: 10px;
+}
+
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  margin: 20px;
+}
+
+.width200 {
+  width: 200px;
+}
+
+.width600 {
+  width: 600px;
+}
+
+.btn-to-get-by-class {
+
+}
+
+.inputs {
+  display: flex;
+flex-direction: column;
+justify-content: space-between;
+min-height: 400px;
+}
+
+.but {
+  background-color: black;
+  color: brown;
 }

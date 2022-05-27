@@ -1,1 +1,29 @@
+
 <h1>Страница каталога</h1>
+<div class="container-block">
+  <div class="categories">
+    <div class="categories-wrapper">
+      <nav class="nav flex-column width200">
+        <!-- <a class="nav-link active" aria-current="page" href="/catalog">Важное в мире</a> -->
+        {{#each categoryNames}}
+        <a class="nav-link" href="/catalog/{{this.id}}">{{this.title}}</a>
+        {{/each}}
+      </nav>
+    </div>
+  </div>
+  <div class="news-list">
+    <div class="news-list-wrapper">
+      {{#each posts}}
+      <div class="card" id="{{this.id}}" style="width: 18rem;">
+        <img src="{{this.img}}" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title">{{this.title}}</h5>
+          <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+          </p>-->
+          <a href="/catalog/{{this.category_id}}/{{this.id}}" id="{{this.id}}" class="btn btn-primary btn-to-get-by-class">Читать подробнее</a>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
