@@ -8,7 +8,7 @@ const {
 router.route('/')
   .get(async (req, res) => {
     try {
-      const id = 1;
+      const id = req.session.userid;
       const userName = await User.findOne({ where: { id } });
       const categoryNames = await Category.findAll();
       const categoriesArr = categoryNames.map((el) => ({ id: el.dataValues.id, title: el.dataValues.title }));
@@ -87,7 +87,7 @@ router.route('/')
       const posts = await Post.findAll({ raw: true });
 
       //  получаем списки предпочтений и не предпочтений
-      const userId = 1;
+      const userId = req.session.userid;
       const prefers = await Prefer.findAll({ where: { user_id: userId }, raw: true });
       // const notPrefers = await Notprefer.findAll({ where: { user_id: userId }, raw: true });
 
@@ -101,11 +101,12 @@ router.route('/')
       let showPosts;
       if (prefers.length === 0) {
         showPosts = [...posts];
-        console.log('********* if');
+        // console.log('********* if');
       } else {
         showPosts = [...afterPref];
-        console.log('********* else');
+        // console.log('********* else');
       }
+      console.log('^^^^^^^^^^^^^^^^^^^', req.session.userid);
       res.render('catalog', { userName, categoryNames, showPosts });
     } catch (err) {
       // console.error(err);
@@ -118,7 +119,7 @@ router.route('/:catId')
     const posts = await Post.findAll({ where: { category_id: catId }, raw: true });
     const categoryNames = await Category.findAll();
 
-    const userId = 1;
+    const userId = req.session.userid;
     const prefers = await Prefer.findAll({ where: { user_id: userId }, raw: true });
     // const notPrefers = await Notprefer.findAll({ where: { user_id: userId }, raw: true });
 
@@ -132,10 +133,10 @@ router.route('/:catId')
     let showPosts;
     if (prefers.length === 0) {
       showPosts = [...posts];
-      console.log('********* if');
+      // console.log('********* if');
     } else {
       showPosts = [...afterPref];
-      console.log('********* else');
+      // console.log('********* else');
     }
 
     res.render('catalog', { categoryNames, showPosts });
@@ -143,7 +144,7 @@ router.route('/:catId')
 
 router.route('/:catId/:id')
   .get(async (req, res) => {
-    const { id, catId } = req.params;
+    const { id } = req.params;
     const post = await Post.findOne({ where: { id }, raw: true });
     const categoryNames = await Category.findAll();
     res.render('card', { categoryNames, post });
