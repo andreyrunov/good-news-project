@@ -55,12 +55,35 @@ min-height: 40px;
 
 .inputs {
   display: flex;
-flex-direction: column;
-justify-content: space-between;
+flex-direction: row;
+justify-content: space-around;
 min-height: 400px;
+padding-top: 30px;
 }
 
-.but {
-  background-color: black;
-  color: brown;
+.li {
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  list-style-type: none;
+  font-size: 22px;
+}
+
+.btn-danger{ 
+  width: 20px;
+  height: 20px;
+}
+
+.bg-secondary {
+  font-size: 14px;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) and (max-width: 1400px) {
+  .inputs {
+    flex-direction: column;
+  }
 }
