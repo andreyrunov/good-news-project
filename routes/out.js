@@ -7,7 +7,6 @@ const router = require('express').Router();
 
 router.get('/',  (req, res) => {
   console.log('hjgjh');
-  
   req.session.destroy();
   res.clearCookie('sessionID');
   res.locals.destroy();

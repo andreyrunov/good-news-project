@@ -37,8 +37,10 @@ app.use(express.json());
 app.use(express.static(path.join(process.env.PWD, 'public')));
 
 app.use('/', authRouter);
-app.use('/auth', authRouter);
 app.use('/register', registerRouter);
+app.use(checkSession);
+
+
 app.use('/catalog', catalogRouter);
 app.use('/profile', profileRouter);
 app.use('/about', cardRouter);

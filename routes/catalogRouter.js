@@ -2,10 +2,12 @@ const router = require('express').Router();
 const axios = require('axios');
 const { parseString } = require('xml2js');
 const { User, Category, Post } = require('../db/models');
+const { checkSession } = require('../middleWares/middleWare');
 
 router.route('/')
   .get(async (req, res) => {
     try {
+      const idUser = req.session.userid;
       const id = 1;
       const userName = await User.findOne({ where: { id } });
       const categoryNames = await Category.findAll();
