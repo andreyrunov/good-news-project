@@ -38,11 +38,11 @@ app.use(express.static(path.join(process.env.PWD, 'public')));
 
 app.use('/', authRouter);
 app.use(checkSession);
+app.use('/auth', authRouter);
 app.use('/register', registerRouter);
 app.use('/catalog', catalogRouter);
 app.use('/profile', profileRouter);
 app.use('/about', cardRouter);
-
 
 app.use('/out', out);
 
