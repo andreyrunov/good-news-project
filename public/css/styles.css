@@ -1,8 +1,25 @@
-
+body {
+  background-color: white;
+}
 h1 {
   margin: 15px;
 }
 
+/* .container-fluid {
+  background-color: white;
+}
+
+
+.navbar-expand-lg {
+  background-color: white;
+} */
+
+.navbar {
+  background-color: white;
+}
+/* .container {
+  background-color: white;
+} */
 .pref {
 display: flex;
 flex-direction: row;
