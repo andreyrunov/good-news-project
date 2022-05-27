@@ -44,8 +44,6 @@ app.use('/catalog', catalogRouter);
 app.use('/profile', profileRouter);
 app.use('/about', cardRouter);
 
-
-
 app.use('/out', out);
 
 app.listen(PORT, () => {

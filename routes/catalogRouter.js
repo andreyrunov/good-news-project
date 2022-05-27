@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const axios = require('axios');
 const { parseString } = require('xml2js');
-const { User, Category, Post } = require('../db/models');
+const {
+  User, Category, Post, Prefer, Notprefer,
+} = require('../db/models');
 
 router.route('/')
   .get(async (req, res) => {
@@ -46,12 +48,12 @@ router.route('/')
       });
 
       const getRbc = await axios.get('https://rssexport.rbc.ru/rbcnews/news/30/full.rss');
-      
+
       let newsRbc;
       parseString(getRbc.data, (err, result) => {
         newsRbc = result.rss.channel[0].item;
       });
-      
+
       const newArrRbc = newsRbc.map((el) => {
         if (el.enclosure?.[0].$.type === 'image/jpeg') {
           return {
@@ -59,7 +61,7 @@ router.route('/')
           };
         }
       });
-      console.log(newArrRbc);
+      // console.log(newArrRbc);
 
       newArrRbc.forEach(async (el) => {
         categoriesArr.forEach(async (element) => {
@@ -81,10 +83,30 @@ router.route('/')
           }
         });
       });
-      
-      const posts = await Post.findAll();
 
-      res.render('catalog', { userName, categoryNames, posts });
+      const posts = await Post.findAll({ raw: true });
+
+      //  получаем списки предпочтений и не предпочтений
+      const userId = 1;
+      const prefers = await Prefer.findAll({ where: { user_id: userId }, raw: true });
+      // const notPrefers = await Notprefer.findAll({ where: { user_id: userId }, raw: true });
+
+      const afterPref = [];
+      posts.forEach((el) => prefers.forEach((elem) => {
+        if (el.text.includes(elem.text) || el.title.includes(elem.text)) {
+          afterPref.push(el);
+        }
+      }));
+
+      let showPosts;
+      if (prefers.length === 0) {
+        showPosts = [...posts];
+        console.log('********* if');
+      } else {
+        showPosts = [...afterPref];
+        console.log('********* else');
+      }
+      res.render('catalog', { userName, categoryNames, showPosts });
     } catch (err) {
       // console.error(err);
     }
@@ -95,7 +117,28 @@ router.route('/:catId')
     const { catId } = req.params;
     const posts = await Post.findAll({ where: { category_id: catId }, raw: true });
     const categoryNames = await Category.findAll();
-    res.render('catalog', { categoryNames, posts });
+
+    const userId = 1;
+    const prefers = await Prefer.findAll({ where: { user_id: userId }, raw: true });
+    // const notPrefers = await Notprefer.findAll({ where: { user_id: userId }, raw: true });
+
+    const afterPref = [];
+    posts.forEach((el) => prefers.forEach((elem) => {
+      if (el.text.includes(elem.text) || el.title.includes(elem.text)) {
+        afterPref.push(el);
+      }
+    }));
+
+    let showPosts;
+    if (prefers.length === 0) {
+      showPosts = [...posts];
+      console.log('********* if');
+    } else {
+      showPosts = [...afterPref];
+      console.log('********* else');
+    }
+
+    res.render('catalog', { categoryNames, showPosts });
   });
 
 router.route('/:catId/:id')
