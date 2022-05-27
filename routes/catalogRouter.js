@@ -7,8 +7,8 @@ const { checkSession } = require('../middleWares/middleWare');
 router.route('/')
   .get(async (req, res) => {
     try {
-      const idUser = req.session.userid;
-      const id = 1;
+
+      const id = req.session.userid;
       const userName = await User.findOne({ where: { id } });
       const categoryNames = await Category.findAll();
       const categoriesArr = categoryNames.map((el) => ({ id: el.dataValues.id, title: el.dataValues.title }));
@@ -48,12 +48,12 @@ router.route('/')
       });
 
       const getRbc = await axios.get('https://rssexport.rbc.ru/rbcnews/news/30/full.rss');
-      
+
       let newsRbc;
       parseString(getRbc.data, (err, result) => {
         newsRbc = result.rss.channel[0].item;
       });
-      
+
       const newArrRbc = newsRbc.map((el) => {
         if (el.enclosure?.[0].$.type === 'image/jpeg') {
           return {
@@ -61,7 +61,7 @@ router.route('/')
           };
         }
       });
-      console.log(newArrRbc);
+      // console.log(newArrRbc);
 
       newArrRbc.forEach(async (el) => {
         categoriesArr.forEach(async (element) => {
@@ -83,10 +83,31 @@ router.route('/')
           }
         });
       });
-      
-      const posts = await Post.findAll();
 
-      res.render('catalog', { userName, categoryNames, posts });
+      const posts = await Post.findAll({ raw: true });
+
+      //  получаем списки предпочтений и не предпочтений
+      const userId = req.session.userid;
+      const prefers = await Prefer.findAll({ where: { user_id: userId }, raw: true });
+      // const notPrefers = await Notprefer.findAll({ where: { user_id: userId }, raw: true });
+
+      const afterPref = [];
+      posts.forEach((el) => prefers.forEach((elem) => {
+        if (el.text.includes(elem.text) || el.title.includes(elem.text)) {
+          afterPref.push(el);
+        }
+      }));
+
+      let showPosts;
+      if (prefers.length === 0) {
+        showPosts = [...posts];
+        // console.log('********* if');
+      } else {
+        showPosts = [...afterPref];
+        // console.log('********* else');
+      }
+      console.log('^^^^^^^^^^^^^^^^^^^', req.session.userid);
+      res.render('catalog', { userName, categoryNames, showPosts });
     } catch (err) {
       // console.error(err);
     }
@@ -97,12 +118,33 @@ router.route('/:catId')
     const { catId } = req.params;
     const posts = await Post.findAll({ where: { category_id: catId }, raw: true });
     const categoryNames = await Category.findAll();
-    res.render('catalog', { categoryNames, posts });
+
+    const userId = req.session.userid;
+    const prefers = await Prefer.findAll({ where: { user_id: userId }, raw: true });
+    // const notPrefers = await Notprefer.findAll({ where: { user_id: userId }, raw: true });
+
+    const afterPref = [];
+    posts.forEach((el) => prefers.forEach((elem) => {
+      if (el.text.includes(elem.text) || el.title.includes(elem.text)) {
+        afterPref.push(el);
+      }
+    }));
+
+    let showPosts;
+    if (prefers.length === 0) {
+      showPosts = [...posts];
+      // console.log('********* if');
+    } else {
+      showPosts = [...afterPref];
+      // console.log('********* else');
+    }
+
+    res.render('catalog', { categoryNames, showPosts });
   });
 
 router.route('/:catId/:id')
   .get(async (req, res) => {
-    const { id, catId } = req.params;
+    const { id } = req.params;
     const post = await Post.findOne({ where: { id }, raw: true });
     const categoryNames = await Category.findAll();
     res.render('card', { categoryNames, post });
